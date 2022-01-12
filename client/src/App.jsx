@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import { NavBar, Welcome, Footer, Services, Transactions} from './components';
-import "./App.css";
 
 const App = () => {
 
