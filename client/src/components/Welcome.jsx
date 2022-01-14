@@ -109,11 +109,11 @@ const Welcome = () => {
                     
                         <div className="h-[1px] w-full bg-gray-400 my-2"></div>
                     
-                        {true ? (
+                        {false ? (
                             <Loader />
                         ) : (
                             <button
-                                className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4d7c] rounded-full cursor-pointer"
+                                className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4d7c] rounded-full cursor-pointer hover:bg-[#2952e3]"
                                 type="button"
                                 onClick={handleSubmit}
                             >
