@@ -21,10 +21,17 @@ const Input = ({placeholder, name, type, value, handleChange}) => (
 );
 
 const Welcome = () => {
-    const { connectWallet, currentAccount } = useContext(TransactionContext);
+    const { connectWallet, currentAccount, formData, setFormData, onFormChange, sendTransaction } = useContext(TransactionContext);
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
+        const { addressTo, amount, keyword, message } = formData;
+
+        // some conditions
+        if (!addressTo || !amount || !keyword || !message) return;
+
+        sendTransaction();
     }
 
     return (
@@ -104,10 +111,10 @@ const Welcome = () => {
 
                     {/* Form */}
                     <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
-                        <Input placeholder="Adress To" name="adressTo" type="text" handleChange={() => {}}/>
-                        <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={() => {}}/>
-                        <Input placeholder="Keyword (Gif)" name="Keyword" type="text" handleChange={() => {}}/>
-                        <Input placeholder="Enter message" name="message" type="text" handleChange={() => { }} />
+                        <Input placeholder="Adress To" name="addressTo" type="text" handleChange={onFormChange}/>
+                        <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={onFormChange}/>
+                        <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={onFormChange}/>
+                        <Input placeholder="Enter message" name="message" type="text" handleChange={onFormChange} />
                     
                         <div className="h-[1px] w-full bg-gray-400 my-2"></div>
                     
