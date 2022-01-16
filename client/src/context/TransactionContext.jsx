@@ -98,6 +98,7 @@ export const TransactionProider = ({ children }) => {
             const parsedAmount = ethers.utils.parseEther(amount);
 
             console.log(addressTo, amount, message, keyword);
+            console.log('parsed amount: ', parsedAmount);
 
             await ethereum.request({
                 method: 'eth_sendTransaction',
@@ -109,7 +110,7 @@ export const TransactionProider = ({ children }) => {
                 }]
             });
             
-            const transactionHash = await transactionContract.addToBlockchain( addressTo, +amount, message, keyword);
+            const transactionHash = await transactionContract.addToBlockchain( addressTo, parsedAmount, message, keyword);
            
             setIsLoading(true);
 
@@ -117,11 +118,10 @@ export const TransactionProider = ({ children }) => {
             await transactionHash.wait();
             console.log("Success - ", transactionHash);
 
-            const transactionCount = await transactionContract.getTransactionCount();
-
             setIsLoading(false);
 
-            console.log('transactionCount: ', transactionCount);
+            const transactionCount = await transactionContract.getTransactionsCount();
+
             setTransactionCount(transactionCount.toNumber());
         } catch (error) {
             console.log(error);
@@ -133,6 +133,7 @@ export const TransactionProider = ({ children }) => {
     useEffect(() => {
         checkIfWalletIsConnected();
     }, []);
+
 
     // wrap children to context provider
     return (
