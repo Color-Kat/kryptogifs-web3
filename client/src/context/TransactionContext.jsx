@@ -31,8 +31,8 @@ export const TransactionProider = ({ children }) => {
         message: ''
     });
     const [isLoading, setIsLoading] = useState(false);
-    const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'));
-    const [transactions, setTransactions] = useState(localStorage.getItem('transactions'));
+    const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount') ?? []);
+    const [transactions, setTransactions] = useState(localStorage.getItem('transactions') ?? []);
 
     const onFormChange = (e, name) => {
         setFormData(prev => ({
@@ -98,9 +98,6 @@ export const TransactionProider = ({ children }) => {
             const transactionContract = getEthereumContract();
             const parsedAmount = ethers.utils.parseEther(amount);
 
-            console.log(addressTo, amount, message, keyword);
-            console.log('parsed amount: ', parsedAmount);
-
             await ethereum.request({
                 method: 'eth_sendTransaction',
                 params: [{
@@ -115,9 +112,7 @@ export const TransactionProider = ({ children }) => {
            
             setIsLoading(true);
 
-            console.log("Loading - ", transactionHash);
             await transactionHash.wait();
-            console.log("Success - ", transactionHash);
 
             setIsLoading(false);
 
@@ -160,9 +155,9 @@ export const TransactionProider = ({ children }) => {
             }));
         
 
-            // setTransactions(structuredTransactions);
+            setTransactions(structuredTransactions);
             
-            console.log(availableTransactions, structuredTransactions);
+            // console.log(availableTransactions, structuredTransactions);
         } catch (error) {
             console.log(error);
             throw new Error('No ethereum object');
@@ -184,7 +179,10 @@ export const TransactionProider = ({ children }) => {
             formData,
             setFormData,
             onFormChange,
-            sendTransaction
+            sendTransaction,
+            transactionCount,
+            transactions,
+            isLoading
         }}>
             {children}
         </TransactionContext.Provider>
