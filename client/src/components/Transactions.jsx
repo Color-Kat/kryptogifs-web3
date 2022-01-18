@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { TransactionContext } from '../context/TransactionContext';
 import { shortenAddress } from '../utils/shortenAddress';
-import useGifFetch from '../hooks/useFetch';
+import useGifFetch from '../hooks/useGifFetch';
 
 import dummyData from '../utils/dummyData';
 

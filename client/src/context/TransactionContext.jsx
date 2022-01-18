@@ -32,6 +32,7 @@ export const TransactionProider = ({ children }) => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'));
+    const [transactions, setTransactions] = useState(localStorage.getItem('transactions'));
 
     const onFormChange = (e, name) => {
         setFormData(prev => ({
@@ -149,8 +150,19 @@ export const TransactionProider = ({ children }) => {
             const transactionContract = getEthereumContract();
             const availableTransactions = await transactionContract.getAllTransactions();
 
+            const structuredTransactions = availableTransactions.map(transaction => ({
+                addressTo: transaction.receiver,
+                addressFrom: transaction.sender,
+                timestamp: new Date(transaction.timestamp.toNumber() * 1000).toLocaleString(),
+                message: transaction.message,
+                keyword: transaction.keyword,
+                amount: parseInt(transaction.amount._hex) / (10 ** 18)
+            }));
+        
+
+            // setTransactions(structuredTransactions);
             
-            console.log(availableTransactions);
+            console.log(availableTransactions, structuredTransactions);
         } catch (error) {
             console.log(error);
             throw new Error('No ethereum object');
