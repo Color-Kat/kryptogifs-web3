@@ -18,7 +18,7 @@ const getEthereumContract = () => {
     //     signer,
     //     transactionContract
     // });
-    console.log(transactionContract);
+
     return transactionContract;
 }
 
@@ -61,7 +61,7 @@ export const TransactionProider = ({ children }) => {
             if (accounts.length) {
                 setCurrentAccount(accounts[0]);
 
-                // getAllTransactions(); 
+                getAllTransactions(); 
             } else {
                 console.log('No account found');
             }
@@ -128,10 +128,39 @@ export const TransactionProider = ({ children }) => {
             throw new Error('No ethereum object');
         }
     }
+
+    const checkIfTransactionsExists = async () => {
+        try {
+            const transactionContract = getEthereumContract();
+            
+            const transactionCount = await transactionContract.getTransactionsCount();
+
+            window.localStorage.setItem("transactionCount", transactionCount);
+        } catch (error) {
+            console.log(error);
+            throw new Error('No ethereum object');
+        }
+    }
+
+    const getAllTransactions = async () => {
+        try {
+            if (!installMetaMaskMessage()) return;
+
+            const transactionContract = getEthereumContract();
+            const availableTransactions = await transactionContract.getAllTransactions();
+
+            
+            console.log(availableTransactions);
+        } catch (error) {
+            console.log(error);
+            throw new Error('No ethereum object');
+        }
+    }
     
     // try to connect metamask wallet on mount 
     useEffect(() => {
         checkIfWalletIsConnected();
+        checkIfTransactionsExists();
     }, []);
 
 
