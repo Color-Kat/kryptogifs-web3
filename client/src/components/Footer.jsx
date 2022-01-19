@@ -19,7 +19,7 @@ const Footer = () => {
 
             <div className="flex justify-center items-center flex-col mt-5">
                 <p className="text-white text-sm text-center">Come join us.</p>
-                <p className="text-white text-sm text-center">info@krypto-gifs.com</p>
+                <p className="text-white text-sm text-center">info@kryptogifs.tk</p>
             </div>
 
             <div className="sm:w-[90%] w-full h-[0.25px] bg-gray-400 mt-5"></div>

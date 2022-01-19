@@ -119,6 +119,7 @@ export const TransactionProider = ({ children }) => {
             const transactionCount = await transactionContract.getTransactionsCount();
 
             setTransactionCount(transactionCount.toNumber());
+            getAllTransactions();
         } catch (error) {
             console.log(error);
             throw new Error('No ethereum object');
